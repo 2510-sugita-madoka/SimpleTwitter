@@ -188,7 +188,7 @@ public class UserDao {
             sql.append("    email = ?, ");
             // 実践課題 その①
         	// パスワードの入力があった際のみ更新するようにする
-            if(!StringUtils.isEmpty(user.getPassword())) {
+            if(!StringUtils.isBlank(user.getPassword())) {
             	sql.append("    password = ?, ");
             }
             sql.append("    description = ?, ");
@@ -202,7 +202,7 @@ public class UserDao {
             ps.setString(3, user.getEmail());
             // 実践課題 その①
             // パスワードの入力があった際のみ更新するようにする
-            if(!StringUtils.isEmpty(user.getPassword())) {
+            if(!StringUtils.isBlank(user.getPassword())) {
             	ps.setString(4, user.getPassword());
             	ps.setString(5, user.getDescription());
                 ps.setInt(6, user.getId());
@@ -210,9 +210,6 @@ public class UserDao {
             	ps.setString(4, user.getDescription());
                 ps.setInt(5, user.getId());
             }
-
-
-
 
             int count = ps.executeUpdate();
             if (count == 0) {

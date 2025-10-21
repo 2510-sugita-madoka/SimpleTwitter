@@ -124,7 +124,7 @@ public class UserService {
             // パスワード暗号化
         	// 実践課題 その①
         	// パスワードの入力があった際のみ暗号化するようにする
-        	if (!StringUtils.isEmpty(user.getPassword())) {
+        	if (!StringUtils.isBlank(user.getPassword())) {
         		String encPassword = CipherUtil.encrypt(user.getPassword());
                 user.setPassword(encPassword);
         	}
