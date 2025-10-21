@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
+
 import chapter6.beans.User;
 import chapter6.dao.UserDao;
 import chapter6.logging.InitApplication;
@@ -122,7 +124,7 @@ public class UserService {
             // パスワード暗号化
         	// 実践課題 その①
         	// パスワードの入力があった際のみ暗号化するようにする
-        	if (user.getPassword() != "") {
+        	if (!StringUtils.isEmpty(user.getPassword())) {
         		String encPassword = CipherUtil.encrypt(user.getPassword());
                 user.setPassword(encPassword);
         	}
