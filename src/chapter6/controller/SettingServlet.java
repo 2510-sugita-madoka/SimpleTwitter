@@ -69,7 +69,7 @@ public class SettingServlet extends HttpServlet {
             try {
                 new UserService().update(user);
             } catch (NoRowsUpdatedRuntimeException e) {
-		    log.warning("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
+            	log.warning("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
                 errorMessages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
             }
         }
@@ -103,30 +103,39 @@ public class SettingServlet extends HttpServlet {
 
     private boolean isValid(User user, List<String> errorMessages) {
 
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+    			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		String name = user.getName();
+		String account = user.getAccount();
+		String email = user.getEmail();
+		int id = user.getId();
 
-        String name = user.getName();
-        String account = user.getAccount();
-        String email = user.getEmail();
+		if (!StringUtils.isEmpty(name) && (20 < name.length())) {
+			errorMessages.add("名前は20文字以下で入力してください");
+		}
+		if (StringUtils.isEmpty(account)) {
+			errorMessages.add("アカウント名を入力してください");
+		} else if (20 < account.length()) {
+			errorMessages.add("アカウント名は20文字以下で入力してください");
+		}
+		if (!StringUtils.isEmpty(email) && (50 < email.length())) {
+			errorMessages.add("メールアドレスは50文字以下で入力してください");
+		}
 
-        if (!StringUtils.isEmpty(name) && (20 < name.length())) {
-            errorMessages.add("名前は20文字以下で入力してください");
-        }
-        if (StringUtils.isEmpty(account)) {
-            errorMessages.add("アカウント名を入力してください");
-        } else if (20 < account.length()) {
-            errorMessages.add("アカウント名は20文字以下で入力してください");
-        }
-        if (!StringUtils.isEmpty(email) && (50 < email.length())) {
-            errorMessages.add("メールアドレスは50文字以下で入力してください");
-        }
+		// 実践課題 その③
+		// アカウント重複確認
+		// 検索にかからない（NULL）の場合は問題なく
+		// 1件ヒットした際には更新したいアカウントかどうかを判定する
+		User userValid = new UserService().select(account);
+		if (userValid != null && userValid.getId() != id) {
+			errorMessages.add("ユーザーが重複しています");
+		}
 
-        if (errorMessages.size() != 0) {
-            return false;
-        }
-        return true;
+		if (errorMessages.size() != 0) {
+			return false;
+		}
+		return true;
     }
 }
 
