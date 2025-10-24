@@ -129,7 +129,7 @@ public class SettingServlet extends HttpServlet {
 		// 1件ヒットした際には更新したいアカウントかどうかを判定する
 		User userValid = new UserService().select(account);
 		if (userValid != null && userValid.getId() != id) {
-			errorMessages.add("ユーザーが重複しています");
+			errorMessages.add("すでに存在するアカウントです");
 		}
 
 		if (errorMessages.size() != 0) {

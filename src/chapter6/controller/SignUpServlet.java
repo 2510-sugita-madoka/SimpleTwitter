@@ -117,7 +117,7 @@ public class SignUpServlet extends HttpServlet {
 			//   1件以上ヒットした際はエラー
 			User userValid = new UserService().select(account);
 			if (userValid != null) {
-				errorMessages.add("ユーザーが重複しています");
+				errorMessages.add("すでに存在するアカウントです");
 			}
 
 			if (errorMessages.size() != 0) {
