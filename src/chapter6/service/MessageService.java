@@ -57,49 +57,49 @@ public class MessageService {
         }
     }
 
-    // 実践問題　その②
-    // 引数の追加
-    public List<UserMessage> select(String userId) {
+	// 実践問題　その②
+	// 引数の追加
+	public List<UserMessage> select(String userId) {
 
-  	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-          " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+    			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-          final int LIMIT_NUM = 1000;
+    	final int LIMIT_NUM = 1000;
 
-          Connection connection = null;
-          try {
-        	  connection = getConnection();
+    	Connection connection = null;
+    	try {
+    		connection = getConnection();
 
-              /* 実践問題　その②
-               * idをnullで初期化
-               * ServletからuserIdの値が渡ってきていたら
-               * 整数型に型変換し、idに代入
-               */
-              Integer id = null;
-              if(!StringUtils.isEmpty(userId)) {
-              id = Integer.parseInt(userId);
-               }
+		    /* 実践問題　その②
+			 * idをnullで初期化
+			 * ServletからuserIdの値が渡ってきていたら
+			 * 整数型に型変換し、idに代入
+			 */
+			Integer id = null;
+			if(!StringUtils.isEmpty(userId)) {
+				id = Integer.parseInt(userId);
+			 }
 
-              /* 実践問題　その②
-               * messageDao.selectに引数としてInteger型のidを追加
-               * idがnullだったら全件取得する
-               * idがnull以外だったら、その値に対応するユーザーIDの投稿を取得する
-               */
-              List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
-              commit(connection);
+			/* 実践問題　その②
+			 * messageDao.selectに引数としてInteger型のidを追加
+			 * idがnullだったら全件取得する
+			 * idがnull以外だったら、その値に対応するユーザーIDの投稿を取得する
+			 */
+			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
+			commit(connection);
 
-              return messages;
-          } catch (RuntimeException e) {
-              rollback(connection);
-  		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-              throw e;
-          } catch (Error e) {
-              rollback(connection);
-  		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-              throw e;
-          } finally {
-              close(connection);
-          }
-      }
+			return messages;
+	    } catch (RuntimeException e) {
+	    	rollback(connection);
+	    	log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+	    	throw e;
+	    } catch (Error e) {
+	    	rollback(connection);
+	    	log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+	    	throw e;
+	    } finally {
+    	close(connection);
+	    }
+    }
 }
 
