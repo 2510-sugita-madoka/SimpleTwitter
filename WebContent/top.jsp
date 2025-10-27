@@ -65,6 +65,16 @@
 				</div>
 				<div class="text"><c:out value="${message.text}" /></div>
 				<div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+				<c:if test="${ message.userId == loginUser.id }">
+					<form action="deleteMessage" method="post" id="deletForm">
+						<input type="hidden" name="deleteId" value="${message.id}">
+						<input type="submit" name="delete" value="削除">
+					</form>
+					<form action="edit" method="post" id="editForm">
+						<input type="hidden" name="editId" value="${message.id}">
+						<input type="submit" name="edit" value="編集">
+					</form>
+				</c:if>
 			</div>
 		</c:forEach>
     </div>
