@@ -86,6 +86,9 @@ public class MessageService {
 			 * idがnull以外だったら、その値に対応するユーザーIDの投稿を取得する
 			 */
 			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
+
+
+
 			commit(connection);
 
 			return messages;
@@ -138,6 +141,30 @@ public class MessageService {
 	            Message Message = new MessageDao().select(connection, editId);
 	            commit(connection);
 	            return Message;
+	        } catch (RuntimeException e) {
+	            rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+	            throw e;
+	        } catch (Error e) {
+	            rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+	            throw e;
+	        } finally {
+	            close(connection);
+	        }
+	    }
+
+	//つぶやきの編集
+	public void edit(int editId, String text) {
+
+		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+	        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+	        Connection connection = null;
+	        try {
+	            connection = getConnection();
+	            new MessageDao().update(connection, editId, text);
+	            commit(connection);
 	        } catch (RuntimeException e) {
 	            rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);

@@ -70,9 +70,9 @@
 						<input type="hidden" name="deleteId" value="${message.id}">
 						<input type="submit" name="delete" value="削除">
 					</form>
-					<form action="edit" method="post" id="editForm">
+					<form action="edit" method="get" id="editForm">
 						<input type="hidden" name="editId" value="${message.id}">
-						<input type="submit" name="edit" value="編集">
+						<input type="submit" value="編集">
 					</form>
 				</c:if>
 			</div>

@@ -118,8 +118,40 @@ public class MessageDao {
 			ResultSet rs = ps.executeQuery();
 
             List<Message> Message = toMessage(rs);
-            return Message.get(0);
 
+            if(Message.isEmpty()) {
+            	return null;
+            }else {
+            	return Message.get(0);
+            }
+
+		} catch (SQLException e) {
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	//つぶやきの編集
+	public void update(Connection connection, int editId, String text) {
+
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE messages ");
+			sql.append("SET text = ? ");
+			sql.append("WHERE id = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setString(1, text);
+			ps.setInt(2, editId);
+
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
 			throw new SQLRuntimeException(e);
