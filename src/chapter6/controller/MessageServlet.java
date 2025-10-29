@@ -46,24 +46,24 @@ public class MessageServlet extends HttpServlet {
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-			HttpSession session = request.getSession();
-			List<String> errorMessages = new ArrayList<String>();
+		HttpSession session = request.getSession();
+		List<String> errorMessages = new ArrayList<String>();
 
-			String text = request.getParameter("text");
-			if (!isValid(text, errorMessages)) {
-				session.setAttribute("errorMessages", errorMessages);
-				response.sendRedirect("./");
-				return;
-			}
-
-			Message message = new Message();
-			message.setText(text);
-
-			User user = (User) session.getAttribute("loginUser");
-			message.setUserId(user.getId());
-
-			new MessageService().insert(message);
+		String text = request.getParameter("text");
+		if (!isValid(text, errorMessages)) {
+			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
+			return;
+		}
+
+		Message message = new Message();
+		message.setText(text);
+
+		User user = (User) session.getAttribute("loginUser");
+		message.setUserId(user.getId());
+
+		new MessageService().insert(message);
+		response.sendRedirect("./");
 	}
 
 	private boolean isValid(String text, List<String> errorMessages) {
@@ -71,16 +71,16 @@ public class MessageServlet extends HttpServlet {
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-			if (StringUtils.isBlank(text)) {
-				errorMessages.add("メッセージを入力してください");
-			} else if (140 < text.length()) {
-				errorMessages.add("140文字以下で入力してください");
-			}
+		if (StringUtils.isBlank(text)) {
+			errorMessages.add("メッセージを入力してください");
+		} else if (140 < text.length()) {
+			errorMessages.add("140文字以下で入力してください");
+		}
 
-			if (errorMessages.size() != 0) {
-				return false;
-			}
-			return true;
+		if (errorMessages.size() != 0) {
+			return false;
+		}
+		return true;
 	}
 }
 

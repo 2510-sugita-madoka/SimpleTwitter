@@ -160,27 +160,27 @@ public class MessageDao {
 		}
 	}
 
-    private List<Message> toMessage(ResultSet rs) throws SQLException {
+	private List<Message> toMessage(ResultSet rs) throws SQLException {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-        List<Message> messages = new ArrayList<Message>();
-        try {
-            while (rs.next()) {
-            	Message message = new Message();
-            	message.setId(rs.getInt("id"));
-            	message.setUserId(rs.getInt("user_id"));
-            	message.setText(rs.getString("text"));
-            	message.setCreatedDate(rs.getTimestamp("created_date"));
-            	message.setUpdatedDate(rs.getTimestamp("updated_date"));
+		List<Message> messages = new ArrayList<Message>();
+		try {
+			while (rs.next()) {
+				Message message = new Message();
+				message.setId(rs.getInt("id"));
+				message.setUserId(rs.getInt("user_id"));
+				message.setText(rs.getString("text"));
+				message.setCreatedDate(rs.getTimestamp("created_date"));
+				message.setUpdatedDate(rs.getTimestamp("updated_date"));
 
-            	messages.add(message);
-            }
-            return messages;
-        } finally {
-            close(rs);
-        }
-    }
+				messages.add(message);
+			}
+			return messages;
+		} finally {
+			close(rs);
+		}
+	}
 }
 

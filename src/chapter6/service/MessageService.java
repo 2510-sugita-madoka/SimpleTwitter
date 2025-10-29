@@ -46,11 +46,11 @@ public class MessageService {
             commit(connection);
         } catch (RuntimeException e) {
             rollback(connection);
-		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+            log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
             throw e;
         } catch (Error e) {
             rollback(connection);
-		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+            log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
             throw e;
         } finally {
             close(connection);
@@ -87,8 +87,6 @@ public class MessageService {
 			 */
 			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
 
-
-
 			commit(connection);
 
 			return messages;
@@ -108,74 +106,74 @@ public class MessageService {
 	//つぶやきの削除
 	public void delete(int deleteId) {
 
-		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-	        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-	        Connection connection = null;
-	        try {
-	            connection = getConnection();
-	            new MessageDao().delete(connection, deleteId);
-	            commit(connection);
-	        } catch (RuntimeException e) {
-	            rollback(connection);
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			new MessageDao().delete(connection, deleteId);
+			commit(connection);
+		} catch (RuntimeException e) {
+			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-	            throw e;
-	        } catch (Error e) {
-	            rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-	            throw e;
-	        } finally {
-	            close(connection);
-	        }
-	    }
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
 
 	//つぶやきの検索（編集用）
 	public Message editSelect(int editId) {
 
 		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-	        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+				  " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-	        Connection connection = null;
-	        try {
-	            connection = getConnection();
-	            Message Message = new MessageDao().select(connection, editId);
-	            commit(connection);
-	            return Message;
-	        } catch (RuntimeException e) {
-	            rollback(connection);
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			Message Message = new MessageDao().select(connection, editId);
+			commit(connection);
+			return Message;
+		} catch (RuntimeException e) {
+			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-	            throw e;
-	        } catch (Error e) {
-	            rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-	            throw e;
-	        } finally {
-	            close(connection);
-	        }
-	    }
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
 
 	//つぶやきの編集
 	public void edit(int editId, String text) {
 
-		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-	        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-	        Connection connection = null;
-	        try {
-	            connection = getConnection();
-	            new MessageDao().update(connection, editId, text);
-	            commit(connection);
-	        } catch (RuntimeException e) {
-	            rollback(connection);
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			new MessageDao().update(connection, editId, text);
+			commit(connection);
+		} catch (RuntimeException e) {
+			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-	            throw e;
-	        } catch (Error e) {
-	            rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-	            throw e;
-	        } finally {
-	            close(connection);
-	        }
-	    }
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
 }
 
