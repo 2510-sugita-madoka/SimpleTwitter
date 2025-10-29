@@ -36,7 +36,7 @@
 			<ul>
 			 <c:forEach items="${errorMessages}" var="errorMessage">
 				<li><c:out value="${errorMessage}" />
-			.</c:forEach>
+			</c:forEach>
 			</ul>
 		</div>
 		<c:remove var="errorMessages" scope="session" />

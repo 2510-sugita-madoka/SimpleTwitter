@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -141,7 +140,7 @@ public class MessageDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE messages ");
 			sql.append("SET text = ? ");
-			sql.append(", updated_date = '" + new Timestamp(System.currentTimeMillis()) + "' ");
+			sql.append(", updated_date = CURRENT_TIMESTAMP ");
 			sql.append("WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
