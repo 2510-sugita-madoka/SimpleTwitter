@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -103,11 +104,7 @@ public class MessageDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT ");
-			sql.append("    id, ");
-			sql.append("    user_id, ");
-			sql.append("    text, ");
-			sql.append("    created_date, ");
-			sql.append("    updated_date ");
+			sql.append("*");
 			sql.append("FROM messages ");
 			sql.append("WHERE id = ?");
 
@@ -144,6 +141,7 @@ public class MessageDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE messages ");
 			sql.append("SET text = ? ");
+			sql.append(", updated_date = '" + new Timestamp(System.currentTimeMillis()) + "' ");
 			sql.append("WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());

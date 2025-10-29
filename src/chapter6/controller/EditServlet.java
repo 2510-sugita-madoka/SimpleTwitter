@@ -31,8 +31,8 @@ public class EditServlet extends HttpServlet {
 	* アプリケーションの初期化を実施する。
 	*/
 	public EditServlet() {
-	InitApplication application = InitApplication.getInstance();
-	application.init();
+		InitApplication application = InitApplication.getInstance();
+		application.init();
 
 	}
 
@@ -47,10 +47,11 @@ public class EditServlet extends HttpServlet {
 		// 編集するつぶやきのIDを取得
 		List<String> errorMessages = new ArrayList<String>();
 		String id = request.getParameter("editId");
+		HttpSession session = request.getSession();
 
 		// URL上のIDが修正されたかチェックする
-		if (!isValidId(id, errorMessages)) {
-			HttpSession session = request.getSession();
+		if (StringUtils.isBlank(id) || !id.matches("^[0-9]*$")) {
+			errorMessages.add("不正なパラメータが入力されました");
 			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
 			return;
@@ -58,11 +59,10 @@ public class EditServlet extends HttpServlet {
 
 		int editId = Integer.parseInt(id);
 
-		Message messages = new MessageService().editSelect(editId);
+		Message messages = new MessageService().Select(editId);
 
 		if(messages == null) {
 			errorMessages.add("不正なパラメータが入力されました");
-			HttpSession session = request.getSession();
 			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
 			return;
@@ -89,18 +89,20 @@ public class EditServlet extends HttpServlet {
 		int editId = Integer.parseInt(id);
 
 		String text = request.getParameter("text");
+		Message messages = new Message() ;
+		messages.setId(editId);
+		messages.setText(text);
 
 		if (!isValid(text, errorMessages)) {
 			session.setAttribute("errorMessages", errorMessages);
-
-			Message messages = new MessageService().editSelect(editId);
 			request.setAttribute("messages", messages);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 			return;
 		}
 
 		// 更新を行いtop.jspに遷移
-		new MessageService().edit(editId,text);
+		messages.setText(text);
+		new MessageService().update(messages);
 		response.sendRedirect("./");
 
     }
@@ -114,23 +116,6 @@ public class EditServlet extends HttpServlet {
 			errorMessages.add("入力してください");
 		} else if (140 < text.length()) {
 			errorMessages.add("140文字以下で入力してください");
-		}
-
-		if (errorMessages.size() != 0) {
-			return false;
-		}
-		return true;
-	}
-
-	private boolean isValidId(String id, List<String> errorMessages) {
-
-		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
-
-		if (StringUtils.isBlank(id)) {
-			errorMessages.add("不正なパラメータが入力されました");
-		} else if(!StringUtils.isNumeric(id)){
-			errorMessages.add("不正なパラメータが入力されました");
 		}
 
 		if (errorMessages.size() != 0) {

@@ -128,7 +128,7 @@ public class MessageService {
 	}
 
 	//つぶやきの検索（編集用）
-	public Message editSelect(int editId) {
+	public Message Select(int editId) {
 
 		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 				  " : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -153,7 +153,7 @@ public class MessageService {
 	}
 
 	//つぶやきの編集
-	public void edit(int editId, String text) {
+	public void update(Message messages) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -161,7 +161,7 @@ public class MessageService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			new MessageDao().update(connection, editId, text);
+			new MessageDao().update(connection, messages.getId(),  messages.getText());
 			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);

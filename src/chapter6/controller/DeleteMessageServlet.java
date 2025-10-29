@@ -25,19 +25,9 @@ public class DeleteMessageServlet extends HttpServlet {
 	* アプリケーションの初期化を実施する。
 	*/
 	public DeleteMessageServlet() {
-	InitApplication application = InitApplication.getInstance();
-	application.init();
+		InitApplication application = InitApplication.getInstance();
+		application.init();
 
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-
-		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
-
-		request.getRequestDispatcher("top.jsp").forward(request, response);
 	}
 
 	@Override

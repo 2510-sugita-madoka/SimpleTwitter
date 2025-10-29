@@ -10,11 +10,13 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
-		<div class="profile">
-			<div class="name"><h2><c:out value="${loginUser.name}" /></h2></div>
-			<div class="account">@<c:out value="${loginUser.account}" /></div>
-			<div class="description"><c:out value="${loginUser.description}" /></div>
-		</div>
+		<c:if test="${ not empty loginUser }">
+			<div class="profile">
+				<div class="name"><h2><c:out value="${loginUser.name}" /></h2></div>
+				<div class="account">@<c:out value="${loginUser.account}" /></div>
+				<div class="description"><c:out value="${loginUser.description}" /></div>
+			</div>
+		</c:if>
 
 		<c:if test="${ not empty errorMessages }">
 			<div class="errorMessages">
