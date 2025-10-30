@@ -75,6 +75,27 @@
 						<input type="submit" value="編集">
 					</form>
 				</c:if>
+				<c:if test="${ isShowMessageForm }">
+					<form action="comment" method="post" id="comment">
+						<input type="hidden" name="userId" value=${loginUser.id}>
+						<input type="hidden" name="commentId" value="${message.id}">
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+						<br />
+						<input type="submit" name="comment" value="返信">（140文字まで）
+					</form>
+				</c:if>
+				<c:forEach items="${comments}" var="comment">
+				<c:if test="${ message.id == comment.commentMessageId }">
+					<div class="comment-account-name">
+						<span class="comment-account">
+								<c:out value="${comment.userAccount}" />
+								<c:out value="${comment.userName}" />
+						</span>
+					</div>
+					<div class="text"><pre><c:out value="${comment.commentText}" /></pre></div>
+					<div class="date"><fmt:formatDate value="${comment.commentCreatedDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+				</c:if>
+				</c:forEach>
 			</div>
 		</c:forEach>
     </div>
