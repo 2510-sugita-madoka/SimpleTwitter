@@ -59,7 +59,7 @@ public class MessageService {
 
 	// 実践問題　その②
 	// 引数の追加
-	public List<UserMessage> select(String userId) {
+	public List<UserMessage> select(String userId, String start, String end) {
 
     	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
     			" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -80,12 +80,30 @@ public class MessageService {
 				id = Integer.parseInt(userId);
 			 }
 
+			// 絞り込み機能
+			String startDate = null;
+			String endDate = null;
+
+			// 開始日が入力されていない場合、初期値を設定する
+			if(StringUtils.isBlank(start)) {
+				startDate = "2020-01-01 00:00:00";
+			}else {
+				startDate = start + " 00:00:00";
+			}
+
+			// 終了日が入力されていない場合、初期値を設定する
+			if(StringUtils.isBlank(end)) {
+				endDate = "2025-12-01 23:59:59";
+			}else {
+				endDate = end + " 23:59:59";
+			}
+
 			/* 実践問題　その②
 			 * messageDao.selectに引数としてInteger型のidを追加
 			 * idがnullだったら全件取得する
 			 * idがnull以外だったら、その値に対応するユーザーIDの投稿を取得する
 			 */
-			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
+			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM, startDate, endDate);
 
 			commit(connection);
 
