@@ -50,7 +50,8 @@ public class UserCommentDao {
 			sql.append("users.name AS userName ");
 			sql.append("FROM comments ");
 			sql.append("INNER JOIN users ");
-			sql.append("ON comments.user_id = users.id");
+			sql.append("ON comments.user_id = users.id ");
+			sql.append("order by comments.created_date");
 
 			ps = connection.prepareStatement(sql.toString());
 

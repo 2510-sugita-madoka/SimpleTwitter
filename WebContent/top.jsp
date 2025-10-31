@@ -33,13 +33,16 @@
 
 	<form action="index" method="get">
 		日付：
-		<input type="date" name="start" id="start" />～
-		<input type="date" name="end" id="end" />
+		<input type="date" name="start" id="start" value="${startDate}"/>～
+		<input type="date" name="end" id="end" value="${endDate}" />
 		<input type="submit" value="絞り込み">
 	</form>
 
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
+			<c:if test="${ empty loginUser }">
+				<c:remove var="errorMessages" scope="session" />
+			</c:if>
 			<ul>
 			 <c:forEach items="${errorMessages}" var="errorMessage">
 				<li><c:out value="${errorMessage}" />

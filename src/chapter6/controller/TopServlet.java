@@ -63,6 +63,8 @@ public class TopServlet extends HttpServlet {
       // 返信の取得
       List<UserComment> comments = new CommentService().select();
 
+      request.setAttribute("startDate", start);
+      request.setAttribute("endDate", end);
       request.setAttribute("messages", messages);
       request.setAttribute("comments", comments);
       request.setAttribute("isShowMessageForm", isShowMessageForm);
