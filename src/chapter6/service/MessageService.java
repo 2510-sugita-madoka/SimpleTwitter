@@ -99,7 +99,7 @@ public class MessageService {
 		        System.out.println(date);
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		        String endDefaultDate = dateFormat.format(date);
-				endDate = endDefaultDate + " 23:59:59";
+				endDate = endDefaultDate;
 			}else {
 				endDate = end + " 23:59:59";
 			}
