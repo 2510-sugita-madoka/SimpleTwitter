@@ -18,7 +18,7 @@ import chapter6.service.CommentService;
 import chapter6.service.MessageService;
 
 
-@WebServlet(urlPatterns = { "/index.jsp","/index" })
+@WebServlet(urlPatterns = { "/index.jsp" })
 
 public class TopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

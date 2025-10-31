@@ -31,7 +31,7 @@
 		</div>
 	</c:if>
 
-	<form action="index" method="get">
+	<form action="./" method="get">
 		日付：
 		<input type="date" name="start" id="start" value="${startDate}"/>～
 		<input type="date" name="end" id="end" value="${endDate}" />
@@ -40,9 +40,6 @@
 
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
-			<c:if test="${ empty loginUser }">
-				<c:remove var="errorMessages" scope="session" />
-			</c:if>
 			<ul>
 			 <c:forEach items="${errorMessages}" var="errorMessage">
 				<li><c:out value="${errorMessage}" />
@@ -95,16 +92,16 @@
 					</form>
 				</c:if>
 				<c:forEach items="${comments}" var="comment">
-				<c:if test="${ message.id == comment.commentMessageId }">
-					<div class="comment-account-name">
-						<span class="comment-account">
-								<c:out value="${comment.userAccount}" />
-								<c:out value="${comment.userName}" />
-						</span>
-					</div>
-					<div class="text"><pre><c:out value="${comment.commentText}" /></pre></div>
-					<div class="date"><fmt:formatDate value="${comment.commentCreatedDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
-				</c:if>
+					<c:if test="${ message.id == comment.commentMessageId }">
+						<div class="comment-account-name">
+							<span class="comment-account">
+									<c:out value="${comment.userAccount}" />
+									<c:out value="${comment.userName}" />
+							</span>
+						</div>
+						<div class="text"><pre><c:out value="${comment.commentText}" /></pre></div>
+						<div class="date"><fmt:formatDate value="${comment.commentCreatedDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+					</c:if>
 				</c:forEach>
 			</div>
 		</c:forEach>

@@ -4,6 +4,8 @@ import static chapter6.utils.CloseableUtil.*;
 import static chapter6.utils.DBUtil.*;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -93,7 +95,11 @@ public class MessageService {
 
 			// 終了日が入力されていない場合、初期値を設定する
 			if(StringUtils.isBlank(end)) {
-				endDate = "2025-12-01 23:59:59";
+				Date date = new Date();
+		        System.out.println(date);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		        String endDefaultDate = dateFormat.format(date);
+				endDate = endDefaultDate + " 23:59:59";
 			}else {
 				endDate = end + " 23:59:59";
 			}
